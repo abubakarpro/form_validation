@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .row {
+        margin-bottom: 12px;
+      }
+      #container {
+        margin: 20px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1 style="color:red">Form Validation</h1>
+      <form id="form" action="">
+        <div class="row">
+          Name:<br />
+          <input type="text" id="name" autofocus />
+        </div>
+
+        <div class="row">
+          Email:<br />
+          <input type="text" id="email" />
+        </div>
+
+        <div class="row">
+          Message:<br />
+          <textarea id="msg" cols="30" rows="10"></textarea>
+        </div>
+
+        <div>
+          <button type="reset">Reset</button>
+          <button id="submit">Submit</button>
+        </div>
+        <div id="result"></div>
+      </form>
+    </div>
+
+    <script>
+      const form = document.querySelector("#form");
+      const name = document.querySelector("#name");
+      const email = document.querySelector("#email");
+      const msg = document.querySelector("#msg");
+      const result = document.querySelector("#result");
+      form.onsubmit = function(e) {
+        e.preventDefault();
+        const errors = [];
+        if (!name.value) {
+          errors.push("Name field invalid");
+        }
+        if (!validateEmail(email.value)) {
+          errors.push("Email field invalid");
+        }
+        if (!msg.value) {
+          errors.push("Message field  invalid");
+        }
+        if (errors.length) {
+          const ul = document.createElement("ul");
+          errors.forEach(error => {
+            const li = document.createElement("li");
+            li.innerHTML = error;
+            ul.appendChild(li);
+          });
+          result.innerHTML = "";
+          result.appendChild(ul);
+        } else {
+          alert("Sent successfully");
+        }
+      };
+      function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+      }
+    </script>
+  </body>
+</html>
